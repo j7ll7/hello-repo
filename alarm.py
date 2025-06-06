@@ -9,12 +9,18 @@ ALARM_FILE = "alarm.viewer.F4.09.xlsx"
 
 
 def robust_parse(value):
-    """Parse dates that may be Excel serials or various strings."""
+    """Parse dates that may be Excel serials or various strings.
+
+    Invalid strings return ``pd.NaT`` instead of raising ``ValueError``.
+    """
     if pd.isna(value):
         return pd.NaT
     if isinstance(value, (int, float)):
         return pd.to_datetime("1899-12-30") + pd.to_timedelta(value, unit="D")
-    return parser.parse(str(value), dayfirst=True)
+    try:
+        return parser.parse(str(value), dayfirst=True)
+    except ValueError:
+        return pd.NaT
 
 
 def load_313pt0_alarms(path: str = ALARM_FILE) -> pd.DataFrame:
