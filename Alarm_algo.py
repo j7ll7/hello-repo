@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import annotations
 """Utility script to merge trend and alarm data and mark failure periods."""
 
 import os
