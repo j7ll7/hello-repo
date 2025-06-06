@@ -139,7 +139,8 @@ def load_drive_warnings(path: str = ALARM_FILE) -> pd.DataFrame:
                              "asset": pd.Series(dtype="int"),
                              "drive warning": pd.Series(dtype="int")})
 
-    alarm["DateTime"] = alarm["DateTime"].apply(robust_parse).dt.floor("S")
+    alarm["DateTime"] = alarm["DateTime"].apply(robust_parse)
+    alarm["DateTime"] = pd.to_datetime(alarm["DateTime"]).dt.floor("S")
     parts = alarm["TagName"].str.split(".", expand=True)
     alarm["asset"] = parts[0].str.extract(r"140M0(\d+)").astype(int)
     alarm["drive warning"] = 1
