@@ -52,6 +52,7 @@ def fetch_trend_db(config_path: str = "input_data.ini") -> pd.DataFrame:
             break
         rows.extend(chunk)
     cursor.close()
+    conn.close()
 
     df = pd.DataFrame.from_records(rows, columns=["DateTime"] + tags)
     df["DateTime"] = pd.to_datetime(df["DateTime"])
