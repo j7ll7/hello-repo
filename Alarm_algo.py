@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 """Utility script to merge trend and alarm data and mark failure periods."""
 
-import os
 import configparser
-from datetime import datetime
 import pandas as pd
 import pyodbc
 
