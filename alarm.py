@@ -23,7 +23,8 @@ def load_313pt0_alarms(path: str = ALARM_FILE) -> pd.DataFrame:
     alarm = alarm[alarm["MessageText"].str.contains(r"HiHi level|LoLo level", na=False, regex=True)]
     alarm = alarm[["DateTime", "TagName"]].copy()
     alarm["DateTime"] = alarm["DateTime"].apply(robust_parse)
-    alarm["DateTime"] = pd.to_datetime(alarm["DateTime"]).dt.ceil("5S")
+    alarm["DateTime"] = pd.to_datetime(alarm["DateTime"])
+    alarm["DateTime"] = alarm["DateTime"].dt.ceil("5S")
     parts = alarm["TagName"].str.split(".", expand=True)
     alarm["asset"] = parts[0] + "." + parts[1]
     alarm["alarm"] = parts[2]
@@ -141,7 +142,8 @@ def load_drive_warnings(path: str = ALARM_FILE) -> pd.DataFrame:
                              "drive warning": pd.Series(dtype="int")})
 
     alarm["DateTime"] = alarm["DateTime"].apply(robust_parse)
-    alarm["DateTime"] = pd.to_datetime(alarm["DateTime"]).dt.floor("S")
+    alarm["DateTime"] = pd.to_datetime(alarm["DateTime"])
+    alarm["DateTime"] = alarm["DateTime"].dt.floor("S")
     parts = alarm["TagName"].str.split(".", expand=True)
     alarm["asset"] = parts[0].str.extract(r"140M0(\d+)").astype(int)
     alarm["drive warning"] = 1
