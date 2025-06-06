@@ -1,8 +1,8 @@
 # Hello Repo
 
-This repository demonstrates how to combine process trend data with discrete alarm logs to highlight periods of equipment failure. The project consists of two main implementations:
+This repository demonstrates how to combine process trend data with discrete alarm logs to highlight periods of equipment failure. The project consists of two main artifacts:
 
-* **Alarm_algo.py** – a Python script that reads historian data from CSV or the INSQL database and merges it with alarm records.
+* **alarm.py** – a Python script generated from the notebook that reads historian data from the INSQL database and merges it with alarm records.
 * **Alarm.ipynb** – a Jupyter notebook containing a step-by-step version of the workflow with additional calculations and summary statistics.
 
 ## Notebook workflow
@@ -20,7 +20,7 @@ Both the notebook and script produce a merged CSV file with the computed alarm f
 
 ## Configuration
 
-`input_data.ini` specifies the historian tags and query parameters when pulling data directly from the database. If omitted, the script expects a CSV file named `historian.db.F5.03.csv`.
+`input_data.ini` specifies the historian tags and query parameters for database queries.
 
 ## Requirements
 
