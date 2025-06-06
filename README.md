@@ -21,6 +21,8 @@ Both the notebook and script produce a merged CSV file with the computed alarm f
 ## Configuration
 
 `input_data.ini` specifies the historian tags and query parameters for database queries.
+Ensure that your alarm exports use the `MM/DD/YY HH:MM:SS` timestamp format or
+adjust the `robust_parse` function if your locale differs.
 
 ## Requirements
 
