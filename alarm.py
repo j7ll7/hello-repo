@@ -1,7 +1,4 @@
 import configparser
-import os
-from datetime import datetime
-from typing import Iterable
 
 import numpy as np
 import pandas as pd
@@ -9,7 +6,6 @@ import pyodbc
 from dateutil import parser
 
 ALARM_FILE = "alarm.viewer.F4.09.xlsx"
-TREND_CSV = "historian.db.F5.03.csv"
 
 
 def robust_parse(value):
