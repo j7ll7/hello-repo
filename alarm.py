@@ -33,7 +33,8 @@ def robust_parse(value):
     if isinstance(value, (int, float)):
         return pd.to_datetime("1899-12-30") + pd.to_timedelta(value, unit="D")
     try:
-        return parser.parse(str(value), dayfirst=True)
+        # Alarm exports use MM/DD/YY format, so disable day-first parsing
+        return parser.parse(str(value), dayfirst=False)
     except ValueError:
         return pd.NaT
 
