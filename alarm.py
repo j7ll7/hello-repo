@@ -22,7 +22,8 @@ def load_313pt0_alarms(path: str = ALARM_FILE) -> pd.DataFrame:
     alarm = df[df["TagName"].str.contains("313PT0", na=False)].copy()
     alarm = alarm[alarm["MessageText"].str.contains(r"HiHi level|LoLo level", na=False, regex=True)]
     alarm = alarm[["DateTime", "TagName"]].copy()
-    alarm["DateTime"] = alarm["DateTime"].apply(robust_parse).dt.ceil("5S")
+    alarm["DateTime"] = alarm["DateTime"].apply(robust_parse)
+    alarm["DateTime"] = pd.to_datetime(alarm["DateTime"]).dt.ceil("5S")
     parts = alarm["TagName"].str.split(".", expand=True)
     alarm["asset"] = parts[0] + "." + parts[1]
     alarm["alarm"] = parts[2]
