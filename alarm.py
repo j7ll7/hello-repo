@@ -52,8 +52,6 @@ def fetch_trend_data(config_path: str) -> pd.DataFrame:
         r"Database=Runtime;"
         r"Trusted_Connection=yes;"
     )
-    connection = pyodbc.connect(conn_str)
-    cursor = connection.cursor()
 
     tags_str = ", ".join(f"[{t}]" for t in tags)
     query = (
@@ -72,14 +70,14 @@ def fetch_trend_data(config_path: str) -> pd.DataFrame:
     )
 
     rows: list[pyodbc.Row] = []
-    cursor.execute(query)
-    while True:
-        chunk = cursor.fetchmany(1000)
-        if not chunk:
-            break
-        rows.extend(chunk)
-    cursor.close()
-    connection.close()
+    with pyodbc.connect(conn_str) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            while True:
+                chunk = cursor.fetchmany(1000)
+                if not chunk:
+                    break
+                rows.extend(chunk)
 
     return pd.DataFrame.from_records(rows, columns=["DateTime"] + tags)
 
