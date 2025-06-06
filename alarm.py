@@ -26,7 +26,9 @@ ALARM_FILE = select_alarm_file()
 def robust_parse(value):
     """Parse dates that may be Excel serials or various strings.
 
-    Invalid strings return ``pd.NaT`` instead of raising ``ValueError``.
+    Alarm exports use ``MM/DD/YY`` format so timestamps are parsed with
+    ``dayfirst=False``. Invalid strings return ``pd.NaT`` instead of
+    raising ``ValueError``.
     """
     if pd.isna(value):
         return pd.NaT
