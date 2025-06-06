@@ -4,8 +4,23 @@ import numpy as np
 import pandas as pd
 import pyodbc
 from dateutil import parser
+from tkinter import Tk, filedialog
 
-ALARM_FILE = "alarm.viewer.F4.09.xlsx"
+
+def select_alarm_file() -> str:
+    """Open a file chooser dialog and return the selected path."""
+    root = Tk()
+    root.withdraw()
+    root.wm_attributes("-topmost", 1)
+    file_path = filedialog.askopenfilename(
+        title="Select alarm Excel file",
+        filetypes=[("Excel files", "*.xlsx *.xls"), ("All files", "*.*")],
+    )
+    root.destroy()
+    return file_path
+
+
+ALARM_FILE = select_alarm_file()
 
 
 def robust_parse(value):
